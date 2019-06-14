@@ -19,7 +19,7 @@ import time
 import signal
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-sys.path.insert(0, BASE_DIR)
+sys.path.insert(0, BASE_DIR)  # 将cocod所在目录加入到sys.path最前面
 
 
 dirs = ('logs', 'keys')
@@ -50,11 +50,11 @@ except ImportError:
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DAEMON = False
-PID_FILE = os.path.join(BASE_DIR, 'coco.pid')
+PID_FILE = os.path.join(BASE_DIR, 'coco.pid')  # 启动创建coco.pid文件
 
-coco = Coco()
+coco = Coco()  # 实例化Coco，进程级实例
 
-
+# 以下为启停管理函数
 def check_pid(pid):
     """ Check For the existence of a unix pid. """
     try:
@@ -67,11 +67,11 @@ def check_pid(pid):
 
 def start():
     print("Start coco process")
-    if DAEMON:
+    if DAEMON:  # 是否已守护进程启动
         fork_daemon()
     with open(PID_FILE, 'w') as f:
         f.write(str(os.getpid()))
-    coco.run_forever()
+    coco.run_forever()   # 启动调用
 
 
 def stop():

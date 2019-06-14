@@ -1,3 +1,56 @@
+对coco进行二次开发及源码阅读
+===
+[toc]
+> coco提供ssh-server和websocket-server服务，供ssh客户端和ws客户端访问。coco作为网关+代理方式，代理用户完成4A并转发SSH交互。
+> 没文档，没注释的情况下进行。。。
+
+## 入口点
+从启动coco服务开始::python run_server.py
+subprocess.call启动:: cocod start 
+
+## 实际程序coco目录结构
+coco/coco/
+├── __init__.py
+├── app.py
+├── char.py
+├── compat.py
+├── conf.py         # 配置文件模块，模范Flask的config模块，config对象单例且类字典
+├── connection.py
+├── const.py
+├── ctx.py
+├── exception.py
+├── httpd
+│   ├── __init__.py
+│   ├── app.py
+│   ├── auth.py
+│   ├── base.py
+│   ├── elfinder
+│   ├── static
+│   ├── templates
+│   ├── utils.py
+│   ├── view.py
+│   └── ws.py
+├── interactive.py
+├── interface.py
+├── logger.py
+├── models.py
+├── proxy.py
+├── recorder.py
+├── service.py
+├── session.py
+├── sftp.py
+├── sshd.py
+├── struct.py
+├── tasks.py
+└── utils.py
+
+## Coco类
+
+
+
+
+
+
 # Jumpserver terminal
 
 Jumpserver terminal is a sub app of Jumpserver.
@@ -40,4 +93,6 @@ Then you need login jumpserver with admin user, active it in <Terminal>
  If all done, your can use your ssh tools connect it.
  
 ssh user@host:port
+
+
 

@@ -26,13 +26,13 @@ from .models import Connection
 __version__ = '1.5.0'
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-logger = get_logger(__file__)
+logger = get_logger(__file__)  # 日志对象，继承自coco
 
 
-class Coco:
+class Coco:  # 主类
     def __init__(self):
-        self.lock = threading.Lock()
-        self.stop_evt = threading.Event()
+        self.lock = threading.Lock()  # 线程锁
+        self.stop_evt = threading.Event()  # 信号灯作用，进程级，多线程间控制与查看Event状态来工作
         self._service = None
         self._sshd = None
         self._httpd = None
@@ -42,13 +42,13 @@ class Coco:
         self.first_load_extra_conf = True
 
     @property
-    def sshd(self):
+    def sshd(self):  # ssh-server
         if self._sshd is None:
             self._sshd = SSHServer()
         return self._sshd
 
     @property
-    def httpd(self):
+    def httpd(self):  # websocket-server
         if self._httpd is None:
             self._httpd = HttpServer()
         return self._httpd
