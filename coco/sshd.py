@@ -23,7 +23,7 @@ BACKLOG = 5
 class SSHServer:
 
     def __init__(self):
-        self.stop_evt = threading.Event()
+        self.stop_evt = threading.Event()  # SSHServer 相关Event控制
         self.workers = []
         self.pipe = None
 
@@ -31,7 +31,7 @@ class SSHServer:
     def host_key(self):
         host_key_path = config['HOST_KEY_FILE']
         if not os.path.isfile(host_key_path):
-            if config.HOST_KEY:
+            if config.HOST_KEY:  # 是否有远程主机的公钥字符串，有则写入到
                 with open(host_key_path, 'w') as f:
                     f.write(config.HOST_KEY)
             else:
@@ -39,7 +39,7 @@ class SSHServer:
         return paramiko.RSAKey(filename=host_key_path)
 
     @staticmethod
-    def gen_host_key(key_path):
+    def gen_host_key(key_path):  # 如果没有则生成rsa加密算法的公私钥
         ssh_key, _ = ssh_key_gen()
         with open(key_path, 'w') as f:
             f.write(ssh_key)
@@ -56,12 +56,12 @@ class SSHServer:
             try:
                 client, addr = sock.accept()
                 t = threading.Thread(target=self.handle_connection, args=(client, addr))
-                t.daemon = True
+                t.daemon = True  # 对于通信线程，设置为deamon，当连接循环线程退出，所有通信断开。
                 t.start()
             except IndexError as e:
                 logger.error("Start SSH server error: {}".format(e))
 
-    def handle_connection(self, sock, addr):
+    def handle_connection(self, sock, addr):  # 连接循环线程
         logger.debug("Handle new connection from: {}".format(addr))
         transport = paramiko.Transport(sock, gss_kex=False)
         try:

@@ -379,7 +379,7 @@ defaults = {
 }
 
 
-def load_from_object(config):
+def load_from_object(config):  # 如果有conf.py模块，从conf模块的config对象中加载其大写属性作为配置。这个类似Flask但是指定了config对象名。
     try:
         from conf import config as c
         config.from_object(c)
@@ -399,14 +399,14 @@ def load_from_yml(config):
     return False
 
 
-def load_user_config():
-    sys.path.insert(0, root_path)
-    config = Config(root_path, defaults)
+def load_user_config():  # 加载配置文件，实例化Config对象
+    sys.path.insert(0, root_path)  # root_path默认就是coco项目目录
+    config = Config(root_path, defaults)  # 实例化Config对象，默认时defaults配置
 
-    loaded = load_from_object(config)
+    loaded = load_from_object(config)  # 从对象中更新配置
     if not loaded:
-        loaded = load_from_yml(config)
-    if not loaded:
+        loaded = load_from_yml(config)  # 如果对象更新失败，那么从yml文件更新
+    if not loaded:  # 都根棍失败的话，报错
         msg = """
 
         Error: No config file found.
@@ -417,7 +417,9 @@ def load_user_config():
     return config
 
 
-config = load_user_config()
+config = load_user_config()  # 加载配置文件，
+
+# 主要是兼容新旧path的处理
 
 old_host_key_path = os.path.join(root_path, 'keys', 'host_rsa_key')
 old_access_key_path = os.path.join(root_path, 'keys', '.access_key')
@@ -427,4 +429,3 @@ if os.path.isfile(old_host_key_path) and not os.path.isfile(config.HOST_KEY_FILE
 
 if os.path.isfile(old_access_key_path) and not os.path.isfile(config.ACCESS_KEY_FILE):
     config.ACCESS_KEY_FILE = old_access_key_path
-
