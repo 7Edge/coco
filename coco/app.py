@@ -26,7 +26,7 @@ from .models import Connection
 __version__ = '1.5.0'
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-logger = get_logger(__file__)  # 日志对象，继承自coco
+logger = get_logger(__file__)  # 日志对象，继承自coco.主logger加载都是在coco.__init__.py文件中
 
 
 class Coco:  # 主类
