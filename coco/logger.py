@@ -62,7 +62,7 @@ def create_logger():
     if level.lower() == 'debug':
         config['loggers']['paramiko'] = main_setting
     dictConfig(config)
-    logger = logging.getLogger()
+    logger = logging.getLogger()  # 默认就创建coco和jms两个父logger对象，作为进程级全局对象。
     return logger
 
 

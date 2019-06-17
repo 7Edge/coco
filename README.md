@@ -11,15 +11,15 @@ subprocess.call启动:: cocod start
 ## 实际程序coco目录结构
 coco/coco/
 ├── __init__.py
-├── app.py
+├── app.py          # 核心Coco类，提供一个单例Coco实例；Coco实例是整个coco组件的核心
 ├── char.py
 ├── compat.py
-├── conf.py         # 配置文件模块，模范Flask的config模块，config对象单例且类字典
+├── conf.py         # 配置文件模块，模仿Flask的config模块，config对象单例且类字典
 ├── connection.py
 ├── const.py
 ├── ctx.py
 ├── exception.py
-├── httpd
+├── httpd           # 这个应该是基于Flask的Websocket server 模块目录
 │   ├── __init__.py
 │   ├── app.py
 │   ├── auth.py
@@ -32,7 +32,7 @@ coco/coco/
 │   └── ws.py
 ├── interactive.py
 ├── interface.py
-├── logger.py
+├── logger.py       # 日志模块，第一次导入该模块回创建两个全局logger，名字分别是“coco”和“jms”, 所有其它模块都'继承'自这两个logger
 ├── models.py
 ├── proxy.py
 ├── recorder.py
